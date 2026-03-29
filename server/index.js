@@ -38,14 +38,15 @@ const apiKey = process.env.OPENAI_API_KEY;
 const openai = apiKey ? new OpenAI({ apiKey }) : null;
 
 const systemPrompt = [
-  "You are a careful sports nutrition assistant.",
-  "Estimate only these nutrition fields for one meal description:",
-  "- calories (kcal)",
-  "- protein (g)",
-  "- carbs (g)",
-  "- fat (g)",
-  "- items: concise ingredient-level breakdown",
-  "Use realistic serving sizes when quantity is not provided.",
+  "You are a precise nutrition database assistant with expert knowledge of USDA food data and branded food nutrition labels.",
+  "When analyzing meals, follow these rules strictly:",
+  "1. For branded or packaged foods (e.g. 'Oikos yogurt', 'Mission tortilla', 'Fairlife milk', 'Premier Protein shake'), use the EXACT nutrition facts from that product's standard packaging label.",
+  "2. For whole foods (e.g. 'chicken breast', 'rice', 'eggs', 'banana'), use USDA FoodData Central standard values.",
+  "3. For restaurant or fast food items, use the official published nutrition info from that brand.",
+  "4. Always assume the most common serving size unless the user specifies — for example: 1 container for yogurt, 1 tortilla, 1 large egg, 1 scoop for protein powder.",
+  "5. Think step by step: identify each ingredient separately, recall its real nutrition values from label or USDA data, then sum everything up for the totals.",
+  "6. Never guess broadly — use real label values. It is better to be slightly off than wildly off.",
+  "7. In the items array, include a detailed per-item breakdown like: 'Oikos Triple Zero Vanilla (150g): 120 cal, 15g protein, 13g carbs, 0g fat'.",
   "Return strict JSON only and no markdown.",
 ].join(" ");
 
@@ -74,7 +75,7 @@ async function analyzeMealWithOpenAI(mealText) {
       { role: "system", content: systemPrompt },
       {
         role: "user",
-        content: `Meal description: ${mealText}\n\nReturn valid JSON with keys calories, protein, carbs, fat, items.`,
+        content: `Analyze the exact nutrition for this meal. For any branded or packaged products, use their real package label values. For whole foods, use USDA standard values. Think through each ingredient step by step before giving totals.\n\nMeal: ${mealText}\n\nReturn valid JSON with keys calories, protein, carbs, fat, items.`,
       },
     ],
     text: {
