@@ -32,6 +32,16 @@ function normalizeMacros(raw = {}) {
   };
 }
 
+async function readErrorMessage(response) {
+  try {
+    const data = await response.json();
+    if (typeof data?.error === "string" && data.error.trim()) return data.error;
+  } catch {
+    // ignore parse errors and use fallback below
+  }
+  return `Request failed (${response.status})`;
+}
+
 function loadGoals() {
   if (typeof window === "undefined") return DEFAULT_GOALS;
   try {
@@ -205,7 +215,7 @@ export default function App() {
       });
 
       if (!response.ok) {
-        throw new Error("Meal analysis failed");
+        throw new Error(await readErrorMessage(response));
       }
 
       const analyzed = await response.json();
@@ -223,8 +233,8 @@ export default function App() {
       setMeals(nextMeals);
       saveMealsForToday(nextMeals);
       setInput("");
-    } catch {
-      setError("Could not analyze that meal. Try adding quantities and ingredients.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not reach the backend. Check server/CORS configuration.");
     } finally {
       setLoading(false);
     }

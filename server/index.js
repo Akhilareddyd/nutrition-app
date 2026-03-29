@@ -10,11 +10,24 @@ const allowedOrigins = (process.env.CORS_ORIGINS || "http://localhost:5173")
   .map((origin) => origin.trim())
   .filter(Boolean);
 
+function isAllowedOrigin(origin) {
+  if (allowedOrigins.includes(origin)) return true;
+
+  try {
+    const url = new URL(origin);
+    if (url.protocol === "http:" && url.hostname === "localhost") return true;
+  } catch {
+    return false;
+  }
+
+  return false;
+}
+
 app.use(
   cors({
     origin(origin, callback) {
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) return callback(null, true);
+      if (isAllowedOrigin(origin)) return callback(null, true);
       return callback(new Error("CORS origin not allowed"));
     },
   })
@@ -114,7 +127,12 @@ app.post("/api/analyze-meal", async (req, res) => {
     return res.json(analyzed);
   } catch (error) {
     console.error("analyze-meal failed", error);
-    return res.status(500).json({ error: "Could not analyze meal" });
+    const detail =
+      error && typeof error === "object" && "message" in error
+        ? String(error.message)
+        : "Could not analyze meal";
+    const isProduction = process.env.NODE_ENV === "production";
+    return res.status(500).json({ error: isProduction ? "Could not analyze meal" : detail });
   }
 });
 
