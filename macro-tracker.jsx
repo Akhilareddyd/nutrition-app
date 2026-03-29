@@ -12,6 +12,7 @@ const MACROS = [
   { key: "carbs", label: "Carbs", unit: "g", color: "#f59e0b" },
   { key: "fat", label: "Fat", unit: "g", color: "#f43f5e" },
 ];
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 
 function getTodayKey() {
   return new Date().toISOString().slice(0, 10);
@@ -197,7 +198,7 @@ export default function App() {
     setError("");
 
     try {
-      const response = await fetch("/api/analyze-meal", {
+      const response = await fetch(`${API_BASE_URL}/api/analyze-meal`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ mealText: input.trim() }),
