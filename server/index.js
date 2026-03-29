@@ -5,10 +5,10 @@ import OpenAI from "openai";
 
 const app = express();
 const port = Number(process.env.PORT || 8787);
-const allowedOrigins = (process.env.CORS_ORIGINS || "http://localhost:5173")
-  .split(",")
-  .map((origin) => origin.trim())
-  .filter(Boolean);
+const allowedOrigins = [
+  "https://nutrition-app-ebon-eight.vercel.app",
+  "http://localhost:5173",
+];
 
 function isAllowedOrigin(origin) {
   if (allowedOrigins.includes(origin)) return true;
