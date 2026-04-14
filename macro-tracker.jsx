@@ -95,7 +95,7 @@ function MacroCard({ label, unit, color, value, goal }) {
   const over = value > safeGoal;
 
   return (
-    <div style={{ background: "#fff", borderRadius: 14, padding: "18px 20px", boxShadow: "0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04)" }}>
+    <div style={{ background: "#ffd6e7", borderRadius: 14, padding: "18px 20px", boxShadow: "0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04)" }}>
       <div style={{ fontSize: 11, color: "#aaa", fontWeight: 600, letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 6 }}>{label}</div>
       <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 12 }}>
         <span style={{ fontSize: 30, fontWeight: 700, color: over ? "#f43f5e" : "#1a1a1a", lineHeight: 1 }}>{Math.round(value)}</span>
@@ -241,7 +241,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#ffc0cb", fontFamily: "-apple-system, 'Helvetica Neue', sans-serif", color: "#1a1a1a" }}>
+    <div style={{ minHeight: "100vh", background: "#93c5fd", fontFamily: "-apple-system, 'Helvetica Neue', sans-serif", color: "#1a1a1a" }}>
       <div style={{ maxWidth: 520, margin: "0 auto", padding: "36px 20px 80px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
           <div>
@@ -262,7 +262,7 @@ export default function App() {
         </div>
 
         {editingGoals && (
-          <div style={{ background: "#fff", borderRadius: 14, padding: 20, marginBottom: 20, boxShadow: "0 1px 3px rgba(0,0,0,0.07)" }}>
+          <div style={{ background: "#ffd6e7", borderRadius: 14, padding: 20, marginBottom: 20, boxShadow: "0 1px 3px rgba(0,0,0,0.07)" }}>
             <div style={{ fontSize: 12, color: "#aaa", fontWeight: 600, letterSpacing: 0.6, textTransform: "uppercase", marginBottom: 14 }}>Daily Goals</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
               {[
@@ -307,7 +307,7 @@ export default function App() {
           ))}
         </div>
 
-        <div style={{ background: "#fff", borderRadius: 14, padding: 16, boxShadow: "0 1px 3px rgba(0,0,0,0.07)", marginBottom: 28 }}>
+        <div style={{ background: "#ffd6e7", borderRadius: 14, padding: 16, boxShadow: "0 1px 3px rgba(0,0,0,0.07)", marginBottom: 28 }}>
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
