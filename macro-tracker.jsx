@@ -241,7 +241,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f7f7f8", fontFamily: "-apple-system, 'Helvetica Neue', sans-serif", color: "#1a1a1a" }}>
+    <div style={{ minHeight: "100vh", background: "#ffc0cb", fontFamily: "-apple-system, 'Helvetica Neue', sans-serif", color: "#1a1a1a" }}>
       <div style={{ maxWidth: 520, margin: "0 auto", padding: "36px 20px 80px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
           <div>
